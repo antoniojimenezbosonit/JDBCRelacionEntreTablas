@@ -1,6 +1,7 @@
 package com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.output;
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

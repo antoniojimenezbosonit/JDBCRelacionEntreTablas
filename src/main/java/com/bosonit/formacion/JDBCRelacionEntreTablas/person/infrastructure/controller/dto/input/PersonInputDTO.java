@@ -2,6 +2,7 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.cont
 
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PersonInputDTO {
 
+    Student student;
     String name;
     String surname;
     String user;
@@ -26,6 +28,7 @@ public class PersonInputDTO {
 
     public PersonInputDTO(Person person){
 
+        this.student = person.getStudent();
         this.name = person.getName();
         this.surname = person.getSurname();
         this.user = person.getUser();

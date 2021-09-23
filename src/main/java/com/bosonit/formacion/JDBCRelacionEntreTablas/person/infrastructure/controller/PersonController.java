@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("person")
 public class PersonController {
 
     PersonServicePort personServiceUseCase;
@@ -42,7 +43,7 @@ public class PersonController {
         return personServiceUseCase.getPersonByID(id_person);
     }
 
-    @GetMapping("/getForUser/{user}")
+    @GetMapping("/getByUser/{user}")
     public List<PersonOutputDTO> getPersonByUser(@PathVariable String user){
             return personServiceUseCase.getPersonByUser(user);
     }

@@ -2,17 +2,16 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain;
 
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.input.PersonInputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 import java.util.Date;
 
 @Setter
@@ -20,10 +19,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 public class Person {
     @Id
     @GeneratedValue
     Integer id_person;
+
+    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
+    Student student;
+
     @Column(nullable = false)
     @Size(min  = 6, max = 10)
     String user;
@@ -44,7 +48,7 @@ public class Person {
     @Column(nullable = false)
     Boolean active;
     @Column(nullable = false)
-    Date created_date;
+    Date created_date = Date.from(Instant.now());
     String imagen_url;
     Date termination_date;
 
@@ -55,6 +59,7 @@ public class Person {
     public void setPerson(PersonInputDTO p){
         if(p == null)
             return ;
+        //if(p.getStudent() != null) this.student = p.getStudent();
         if(p.getUser() != null) this.user = p.getUser();
         if(p.getPassword() != null) this.password = p.getPassword();
         if(p.getName() != null) this.name = p.getName();
