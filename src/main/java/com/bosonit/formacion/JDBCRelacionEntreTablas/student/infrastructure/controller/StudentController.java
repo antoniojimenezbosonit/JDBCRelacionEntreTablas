@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("student")
 public class StudentController {
 
     StudentServicePort studentServiceUseCase;
@@ -36,7 +37,7 @@ public class StudentController {
         return studentServiceUseCase.createStudent(id_person, s);
     }
 
-    @GetMapping("{id_person}")
+    @GetMapping("{id_student}")
     public StudentOutputDTO getStudentById(@PathVariable String id_student) {
 
         return studentServiceUseCase.getStudentByID(id_student);
