@@ -10,9 +10,9 @@ public interface StudentServicePort {
 
     List<Student> getAllStudent();
     StudentOutputDTO getStudentByID(String id);
-    StudentOutputDTO createStudent(int id_person, StudentInputDTO p);
+    StudentOutputDTO createStudent(int id_person, StudentInputDTO s);
     void deleteStudent(String id);
-    StudentOutputDTO updateStudent(String id, StudentInputDTO person);
+    StudentOutputDTO updateStudent(String id, StudentInputDTO studentInputDTO);
     void validation(Student student);
 }
 

@@ -76,12 +76,12 @@ public class StudentServiceUseCase implements StudentServicePort {
         }
     }
 
-    public StudentOutputDTO updateStudent(String id, StudentInputDTO person){
+    public StudentOutputDTO updateStudent(String id, StudentInputDTO student){
 
         StudentOutputDTO personSaved = new StudentOutputDTO();
         try{
             Student student1 = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Persona no encontrada"));
-            student1.setStudent(person);
+            student1.setStudent(student);
             studentRepository.save(student1);
             personSaved = new StudentOutputDTO(student1);
         }catch (NoSuchElementException e){

@@ -53,9 +53,9 @@ public class StudentController {
 
     @PutMapping("{id}")
     @Transactional(rollbackOn = Exception.class)
-    public StudentOutputDTO updateStundent(@PathVariable String id, @RequestBody StudentInputDTO p){
+    public StudentOutputDTO updateStudent(@PathVariable String id, @RequestBody StudentInputDTO s){
 
-           return studentServiceUseCase.updateStudent(id, p);
+           return studentServiceUseCase.updateStudent(id, s);
     }
 
 

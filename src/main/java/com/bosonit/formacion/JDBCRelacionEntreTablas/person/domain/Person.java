@@ -3,6 +3,7 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain;
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.input.PersonInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,9 @@ public class Person {
 
     @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
     Student student;
+
+    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
+    Teacher teacher;
 
     @Column(nullable = false)
     @Size(min  = 6, max = 10)
@@ -59,7 +63,7 @@ public class Person {
     public void setPerson(PersonInputDTO p){
         if(p == null)
             return ;
-        //if(p.getStudent() != null) this.student = p.getStudent();
+
         if(p.getUser() != null) this.user = p.getUser();
         if(p.getPassword() != null) this.password = p.getPassword();
         if(p.getName() != null) this.name = p.getName();
