@@ -30,11 +30,11 @@ public class StudentController {
     }
 
 
-    @PostMapping("{id_person}")
+    @PostMapping("{id_person}/{id_teacher}")
     @Transactional(rollbackOn = Exception.class)
-    public StudentOutputDTO addStudent(@PathVariable int id_person, @RequestBody StudentInputDTO s){
+    public StudentOutputDTO addStudent(@PathVariable int id_person, @PathVariable String id_teacher, @RequestBody StudentInputDTO s){
 
-        return studentServiceUseCase.createStudent(id_person, s);
+        return studentServiceUseCase.createStudent(id_person, id_teacher, s);
     }
 
     @GetMapping("{id_student}")

@@ -10,6 +10,8 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.input.StudentInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.repository.StudentRepository;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,9 @@ public class StudentServiceUseCase implements StudentServicePort {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 
     public List<Student> getAllStudent(){
         List<Student> p = new ArrayList<>();
@@ -53,16 +58,20 @@ public class StudentServiceUseCase implements StudentServicePort {
     }
 
 
-    public StudentOutputDTO createStudent(int id_person, StudentInputDTO s){
+    public StudentOutputDTO createStudent(int id_person, String id_teacher, StudentInputDTO s){
         Student student = new Student(s);
         personRepository.findById(id_person).orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+        teacherRepository.findById(id_teacher).orElseThrow(() -> new RuntimeException("Profesor no encontrada"));
         student.setPerson(personRepository.getById(id_person));
+        student.setTeacher(teacherRepository.getById(id_teacher));
         validation(student);
         studentRepository.save(student);
-        Person p = new Person();
-        p = personRepository.getById(id_person);
+
+
+        Person p = personRepository.getById(id_person);
         p.setStudent(student);
         personRepository.save(p);
+
         StudentOutputDTO personDTO = new StudentOutputDTO(student);
         return personDTO;
     }

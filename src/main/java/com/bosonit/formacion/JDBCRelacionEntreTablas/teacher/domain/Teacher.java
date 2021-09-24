@@ -2,6 +2,7 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain;
 
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.input.TeacherInputDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -31,6 +34,9 @@ public class Teacher {
 
     @Column(nullable = false)
     String branch;
+
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.ALL})
+    List<Student> student = new ArrayList<>();
 
     public Teacher(TeacherInputDTO t){
         setTeacher(t);

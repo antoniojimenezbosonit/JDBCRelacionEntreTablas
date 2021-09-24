@@ -3,6 +3,7 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain;
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.input.StudentInputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +33,9 @@ public class Student {
     @Column(nullable = false)
     String comments;
 
-    //@OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    String id_teacher;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_teacher")
+    Teacher teacher;
 
     @Column(nullable = false)
     String branch;
@@ -48,7 +50,7 @@ public class Student {
         if(s.getPerson() != null) this.person = s.getPerson();
         if(s.getNum_hours_week() != 0) this.num_hours_week = s.getNum_hours_week();
         if(s.getComments() != null) this.comments = s.getComments();
-        if(s.getId_teacher() != null) this.id_teacher = s.getId_teacher();
+        if(s.getTeacher() != null) this.teacher = s.getTeacher();
         if(s.getBranch() != null) this.branch = s.getBranch();
 
     }
