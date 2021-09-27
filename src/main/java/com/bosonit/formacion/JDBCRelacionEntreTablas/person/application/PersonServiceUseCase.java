@@ -92,7 +92,6 @@ public class PersonServiceUseCase implements PersonServicePort {
     }
 
     public void validation(Person person) throws UnprocesableException {
-        //if(person.getStudent() == null) throw new UnprocesableException("student is null");
         if(person.getActive() == null) throw new UnprocesableException("active is null");
         if(person.getName() == null) throw new UnprocesableException("name is null");
         if(person.getPersonal_email() == null) throw new UnprocesableException("personal email is null");

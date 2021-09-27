@@ -6,6 +6,7 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.input.StudentInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -38,9 +39,9 @@ public class StudentController {
     }
 
     @GetMapping("{id_student}")
-    public StudentOutputDTO getStudentById(@PathVariable String id_student) {
+    public String getStudentById(@PathVariable String id_student,@RequestParam(required = false, defaultValue = "simple") String outputType ) {
 
-        return studentServiceUseCase.getStudentByID(id_student);
+        return studentServiceUseCase.getStudentByID(id_student, outputType);
     }
 
     @Transactional(rollbackOn = Exception.class)

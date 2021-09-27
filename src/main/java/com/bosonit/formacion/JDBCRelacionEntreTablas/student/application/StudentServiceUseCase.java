@@ -9,6 +9,7 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.student.application.port.St
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.input.StudentInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputSimpleDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.repository.StudentRepository;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.repository.TeacherRepository;
@@ -42,7 +43,9 @@ public class StudentServiceUseCase implements StudentServicePort {
     }
 
 
-    public StudentOutputDTO getStudentByID(String id){
+    public String getStudentByID(String id, String outputType){
+
+
 
         Optional<Student> p;
         try {
@@ -51,9 +54,18 @@ public class StudentServiceUseCase implements StudentServicePort {
             throw new NotFoundException("error");
         }
 
-        StudentOutputDTO personDTO = new StudentOutputDTO(p.get());
+        if(outputType.equals("full")) {
 
-        return personDTO;
+            StudentOutputDTO personDTO = new StudentOutputDTO(p.get());
+            return "" + personDTO;
+        }else if(outputType.equals("simple")){
+
+            StudentOutputSimpleDTO personSimpleDTO = new StudentOutputSimpleDTO(p.get());
+            return "" + personSimpleDTO;
+
+        }else{
+            return "parametro invalido";
+        }
 
     }
 
@@ -101,6 +113,10 @@ public class StudentServiceUseCase implements StudentServicePort {
     }
 
     public void validation(Student student) throws UnprocesableException {
+        if(student.getNum_hours_week() == 0) throw new UnprocesableException("Number hours week is null");
+        if(student.getComments() == null) throw new UnprocesableException("comments week is null");
+        if(student.getBranch() == null) throw new UnprocesableException("branch hours week is null");
+
 
     }
 }
