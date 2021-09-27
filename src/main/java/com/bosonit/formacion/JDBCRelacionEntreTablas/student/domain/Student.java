@@ -52,10 +52,8 @@ public class Student {
     public void setStudent(StudentInputDTO s){
         if(s == null)
             return ;
-        if(s.getPerson() != null) this.person = s.getPerson();
         if(s.getNum_hours_week() != 0) this.num_hours_week = s.getNum_hours_week();
         if(s.getComments() != null) this.comments = s.getComments();
-        if(s.getTeacher() != null) this.teacher = s.getTeacher();
         if(s.getBranch() != null) this.branch = s.getBranch();
 
     }

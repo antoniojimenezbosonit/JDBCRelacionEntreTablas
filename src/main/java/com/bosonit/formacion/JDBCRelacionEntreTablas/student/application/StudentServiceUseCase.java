@@ -58,17 +58,17 @@ public class StudentServiceUseCase implements StudentServicePort {
     }
 
 
-    public StudentOutputDTO createStudent(int id_person, String id_teacher, StudentInputDTO s){
+    public StudentOutputDTO createStudent(StudentInputDTO s){
         Student student = new Student(s);
-        personRepository.findById(id_person).orElseThrow(() -> new RuntimeException("Persona no encontrada"));
-        teacherRepository.findById(id_teacher).orElseThrow(() -> new RuntimeException("Profesor no encontrada"));
-        student.setPerson(personRepository.getById(id_person));
-        student.setTeacher(teacherRepository.getById(id_teacher));
+        personRepository.findById(s.getId_person()).orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+        teacherRepository.findById(s.getId_teacher()).orElseThrow(() -> new RuntimeException("Profesor no encontrada"));
+        student.setPerson(personRepository.getById(s.getId_person()));
+        student.setTeacher(teacherRepository.getById(s.getId_teacher()));
         validation(student);
         studentRepository.save(student);
 
 
-        Person p = personRepository.getById(id_person);
+        Person p = personRepository.getById(s.getId_person());
         p.setStudent(student);
         personRepository.save(p);
 

@@ -21,20 +21,20 @@ import java.util.Set;
 @NoArgsConstructor
 public class StudentInputDTO {
 
-    Person person;
+    int id_person;
     int num_hours_week;
     String comments;
-    Teacher teacher;
+    String id_teacher;
     String branch;
     String id_studentMatters;
 
     public StudentInputDTO(Student student){
 
-        this.person = student.getPerson();
+        this.id_person = student.getPerson().getId_person();
         this.id_studentMatters = student.getStudentMatters().get(0).getId_matter();
         this.num_hours_week = student.getNum_hours_week();
         this.comments = student.getComments();
-        this.teacher = student.getTeacher();
+        this.id_teacher = student.getTeacher().getId_teacher();
         this.branch = student.getBranch();
 
     }
