@@ -51,14 +51,14 @@ public class TeacherServiceUseCase implements TeacherServicePort {
     }
 
 
-    public TeacherOutputDTO createTeacher(int id_person, TeacherInputDTO t){
+    public TeacherOutputDTO createTeacher(TeacherInputDTO t){
         Teacher teacher = new Teacher(t);
-        personRepository.findById(id_person).orElseThrow(() -> new RuntimeException("profesor no encontrada"));
-        teacher.setPerson(personRepository.getById(id_person));
+        personRepository.findById(t.getId_person()).orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+        teacher.setPerson(personRepository.getById(t.getId_person()));
         validation(teacher);
         teacherRepository.save(teacher);
         Person p = new Person();
-        p = personRepository.getById(id_person);
+        p = personRepository.getById(t.getId_person());
         p.setTeacher(teacher);
         personRepository.save(p);
         TeacherOutputDTO teacherDTO = new TeacherOutputDTO(teacher);

@@ -30,11 +30,11 @@ public class TeacherController {
     }
 
 
-    @PostMapping("{id_teacher}")
+    @PostMapping
     @Transactional(rollbackOn = Exception.class)
-    public TeacherOutputDTO addTeacher(@PathVariable int id_teacher, @RequestBody TeacherInputDTO t){
+    public TeacherOutputDTO addTeacher(@RequestBody TeacherInputDTO t){
 
-        return teacherServiceUseCase.createTeacher(id_teacher, t);
+        return teacherServiceUseCase.createTeacher(t);
     }
 
     @GetMapping("{id_teacher}")

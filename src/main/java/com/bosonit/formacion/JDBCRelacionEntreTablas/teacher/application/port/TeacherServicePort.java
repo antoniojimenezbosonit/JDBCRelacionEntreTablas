@@ -10,7 +10,7 @@ public interface TeacherServicePort {
 
     List<Teacher> getAllTeacher();
     TeacherOutputDTO getTeacherByID(String id);
-    TeacherOutputDTO createTeacher(int id_person, TeacherInputDTO p);
+    TeacherOutputDTO createTeacher(TeacherInputDTO p);
     void deleteTeacher(String id);
     TeacherOutputDTO updateTeacher(String id, TeacherInputDTO teacherInputDTO);
     void validation(Teacher teacher);

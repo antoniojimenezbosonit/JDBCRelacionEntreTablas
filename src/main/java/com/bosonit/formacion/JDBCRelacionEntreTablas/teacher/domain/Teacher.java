@@ -45,7 +45,6 @@ public class Teacher {
     public void setTeacher(TeacherInputDTO t){
         if(t == null)
             return ;
-        if(t.getPerson() != null) this.person = t.getPerson();
         if(t.getComments() != null) this.comments = t.getComments();
         if(t.getBranch() != null) this.branch = t.getBranch();
 

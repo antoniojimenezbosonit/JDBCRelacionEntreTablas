@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TeacherInputDTO {
 
-    Person person;
+    int id_person;
     String comments;
     String branch;
 
     public TeacherInputDTO(Teacher teacher){
 
-        this.person = teacher.getPerson();
+        this.id_person = teacher.getPerson().getId_person();
         this.comments = teacher.getComments();
         this.branch = teacher.getBranch();
 

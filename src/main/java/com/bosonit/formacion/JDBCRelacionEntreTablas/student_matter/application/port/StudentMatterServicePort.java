@@ -1,8 +1,6 @@
 package com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.application.port;
 
-import com.bosonit.formacion.JDBCRelacionEntreTablas.StudentGetMatter;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.domain.StudentMatter;
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.ListIdStudent;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.dto.input.StudentMatterInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.dto.output.StudentMatterOutputDTO;
 
