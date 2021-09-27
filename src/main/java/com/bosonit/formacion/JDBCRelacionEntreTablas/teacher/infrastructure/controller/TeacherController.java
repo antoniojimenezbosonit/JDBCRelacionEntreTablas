@@ -1,10 +1,6 @@
 package com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller;
 
 
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student.application.port.StudentServicePort;
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.input.StudentInputDTO;
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.application.port.TeacherServicePort;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.input.TeacherInputDTO;
