@@ -61,6 +61,14 @@ public class StudentMatterController {
         return "StudentMatter delete";
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    @DeleteMapping("/desasing/{id_student}")
+    public  String deleteAsingMatterToStudent(@PathVariable String id_student, @RequestBody List<String> id_studentMatters){
+
+        studentMatterServiceUseCase.deleteAsingMatterToStudent(id_studentMatters, id_student);
+        return "StudentMatter delete";
+    }
+
     @PutMapping("{id}")
     @Transactional(rollbackOn = Exception.class)
     public StudentMatterOutputDTO updateStudentMatter(@PathVariable String id, @RequestBody StudentMatterInputDTO sm){

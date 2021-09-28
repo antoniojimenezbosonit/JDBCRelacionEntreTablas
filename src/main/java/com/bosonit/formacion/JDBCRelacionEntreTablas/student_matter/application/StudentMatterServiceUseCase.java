@@ -3,6 +3,7 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.application
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.exceptions.NotFoundException;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.exceptions.UnprocesableException;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.repository.StudentRepository;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.application.port.StudentMatterServicePort;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.domain.StudentMatter;
@@ -15,10 +16,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -101,6 +100,33 @@ public class StudentMatterServiceUseCase implements StudentMatterServicePort {
         try {
             studentMatterRepository.findById(id).orElseThrow(() -> new RuntimeException("materia no encontrada no encontrada"));
             studentMatterRepository.deleteById(id);
+        }catch (NoSuchElementException e){
+            throw new NotFoundException("error");
+        }
+    }
+
+    @Override
+    public void deleteAsingMatterToStudent(List<String> id_studentMatter, String id_student) {
+        try{
+            studentRepository.findById(id_student).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+            for (String studentMatter: id_studentMatter)
+            {
+
+                studentMatterRepository.findById(studentMatter).orElseThrow(() -> new RuntimeException("Materia no encontrado"));
+                StudentMatter st = studentMatterRepository.getById(studentMatter);
+                List<Student> list = st.getStudents();
+
+                List<Student> listCopia= list.stream().collect(Collectors.toList());
+                for (Student student: listCopia)
+                {
+                    if(student.getId_student().equals("STUDENT00000001")) {
+                        st.getStudents().remove(student);
+                    }
+                }
+                studentMatterRepository.save(st);
+
+            }
+
         }catch (NoSuchElementException e){
             throw new NotFoundException("error");
         }

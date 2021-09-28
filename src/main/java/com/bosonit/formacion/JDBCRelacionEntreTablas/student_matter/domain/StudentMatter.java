@@ -2,7 +2,6 @@ package com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.domain;
 
 
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.domain.Student;
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.repository.StudentRepository;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.dto.input.StudentMatterInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.utils.StringPrefixedSequenceIdGenerator;
 import lombok.AllArgsConstructor;
