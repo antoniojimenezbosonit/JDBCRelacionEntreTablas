@@ -13,7 +13,9 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.cont
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.repository.StudentRepository;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.repository.TeacherRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +45,7 @@ public class StudentServiceUseCase implements StudentServicePort {
     }
 
 
-    public String getStudentByID(String id, String outputType){
+    public Object getStudentByID(String id, String outputType){
 
 
 
@@ -57,11 +59,11 @@ public class StudentServiceUseCase implements StudentServicePort {
         if(outputType.equals("full")) {
 
             StudentOutputDTO personDTO = new StudentOutputDTO(p.get());
-            return "" + personDTO;
+            return personDTO;
         }else if(outputType.equals("simple")){
 
             StudentOutputSimpleDTO personSimpleDTO = new StudentOutputSimpleDTO(p.get());
-            return "" + personSimpleDTO;
+            return personSimpleDTO;
 
         }else{
             return "parametro invalido";

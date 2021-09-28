@@ -5,6 +5,7 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.input.StudentInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.domain.StudentMatter;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.utils.StringPrefixedSequenceIdGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,19 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Student {
+
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    String id_student;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
+    @GenericGenerator(
+            name = "student_seq",
+            strategy = "com.bosonit.formacion.JDBCRelacionEntreTablas.utils.StringPrefixedSequenceIdGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "STUDENT"),
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")
+            })
+    @Column(name = "id_student")
+    private String id_student;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_persona")

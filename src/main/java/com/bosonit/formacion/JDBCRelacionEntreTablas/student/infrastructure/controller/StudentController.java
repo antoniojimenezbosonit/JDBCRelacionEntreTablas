@@ -39,7 +39,7 @@ public class StudentController {
     }
 
     @GetMapping("{id_student}")
-    public String getStudentById(@PathVariable String id_student,@RequestParam(required = false, defaultValue = "simple") String outputType ) {
+    public Object getStudentById(@PathVariable String id_student,@RequestParam(required = false, defaultValue = "simple") String outputType ) {
 
         return studentServiceUseCase.getStudentByID(id_student, outputType);
     }
