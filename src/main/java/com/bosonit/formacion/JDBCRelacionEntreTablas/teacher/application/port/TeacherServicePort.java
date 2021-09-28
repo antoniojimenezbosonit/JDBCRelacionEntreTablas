@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface TeacherServicePort {
 
-    List<Teacher> getAllTeacher();
-    TeacherOutputDTO getTeacherByID(String id);
+    List<Object> getAllTeacher(String outputType);
+    Object getTeacherByID(String id, String outputType);
     TeacherOutputDTO createTeacher(TeacherInputDTO p);
     void deleteTeacher(String id);
     TeacherOutputDTO updateTeacher(String id, TeacherInputDTO teacherInputDTO);

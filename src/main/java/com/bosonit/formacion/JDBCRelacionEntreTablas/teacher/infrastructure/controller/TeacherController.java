@@ -21,12 +21,10 @@ public class TeacherController {
     TeacherServicePort teacherServiceUseCase;
 
     @GetMapping
-    public List<TeacherOutputDTO> getAllTeacher(){
-        List<Teacher> teacherList = new ArrayList<>();
-        teacherList = teacherServiceUseCase.getAllTeacher();
-        return teacherList.stream()
-                .map( l -> new TeacherOutputDTO(l))
-                .collect(Collectors.toList());
+    public List<Object> getAllTeacher(@RequestParam(required = false, defaultValue = "simple") String outputType){
+        List<Object> teacherList = new ArrayList<>();
+        teacherList = teacherServiceUseCase.getAllTeacher(outputType);
+        return teacherList;
     }
 
 
@@ -38,9 +36,9 @@ public class TeacherController {
     }
 
     @GetMapping("{id_teacher}")
-    public TeacherOutputDTO getTeacherById(@PathVariable String id_teacher) {
+    public Object getTeacherById(@PathVariable String id_teacher, @RequestParam(required = false, defaultValue = "simple") String outputType) {
 
-        return teacherServiceUseCase.getTeacherByID(id_teacher);
+        return teacherServiceUseCase.getTeacherByID(id_teacher, outputType);
     }
 
     @Transactional(rollbackOn = Exception.class)

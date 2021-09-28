@@ -9,6 +9,7 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.application.port.Te
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.input.TeacherInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.output.TeacherOutputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.output.TeacherOutputSimpleDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,28 @@ public class TeacherServiceUseCase implements TeacherServicePort {
     @Autowired
     PersonRepository personRepository;
 
-    public List<Teacher> getAllTeacher(){
+    public List<Object> getAllTeacher(String outputType){
         List<Teacher> t = new ArrayList<>();
         t = teacherRepository.findAll();
-        return t;
+        List<Object> list = new ArrayList<>();
+        if(outputType.equals("full")){
+            t.stream().forEach((teacher) -> {
+                TeacherOutputDTO to = new TeacherOutputDTO(teacher);
+                list.add(to);
+            });
+            return list;
+        }else if(outputType.equals("simple")){
+            t.stream().forEach((teacher) ->{
+                TeacherOutputSimpleDTO to = new TeacherOutputSimpleDTO(teacher);
+                list.add(to);
+            });
+            return list;
+        }
+        return list;
     }
 
 
-    public TeacherOutputDTO getTeacherByID(String id){
+    public Object getTeacherByID(String id, String outputType){
 
         Optional<Teacher> t;
         try {
@@ -44,9 +59,18 @@ public class TeacherServiceUseCase implements TeacherServicePort {
             throw new NotFoundException("error");
         }
 
-        TeacherOutputDTO teacherDTO = new TeacherOutputDTO(t.get());
+        if(outputType.equals("full")){
 
-        return teacherDTO;
+            TeacherOutputDTO teacherDTO = new TeacherOutputDTO(t.get());
+            return teacherDTO;
+        }else if(outputType.equals("simple")){
+
+            TeacherOutputSimpleDTO teacherSimpleDTO = new TeacherOutputSimpleDTO(t.get());
+            return teacherSimpleDTO;
+        }else{
+            return "invalid param";
+        }
+
 
     }
 

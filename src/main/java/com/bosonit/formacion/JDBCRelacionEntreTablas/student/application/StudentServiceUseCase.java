@@ -81,7 +81,7 @@ public class StudentServiceUseCase implements StudentServicePort {
             return studentSimpleDTO;
 
         }else{
-            return "parametro invalido";
+            return "invalid param";
         }
 
     }

@@ -69,7 +69,7 @@ public class PersonServiceUseCase implements PersonServicePort {
             return personSimpleDTO;
 
         }else{
-            return "parametro invalido";
+            return "invalid param";
         }
 
     }
