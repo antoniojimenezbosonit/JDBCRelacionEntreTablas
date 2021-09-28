@@ -12,6 +12,7 @@ public interface StudentMatterServicePort {
     Object getStudentMatterByID(String id, String outputType);
     StudentMatterOutputDTO createStudentMatter(StudentMatterInputDTO sm);
     void deleteStudentMatter(String id);
+    void deleteasingMatterToStudent(List<String> id_studentMatter, String id_student);
     StudentMatterOutputDTO updateStudentMatter(String id, StudentMatterInputDTO studentMatterInputDTO);
     void validation(StudentMatter studentMatter);
     String asingMatterToStudent(List<String> id_student, String id_studentMatter);
