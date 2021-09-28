@@ -26,12 +26,10 @@ public class StudentMatterController {
     StudentMatterServicePort studentMatterServiceUseCase;
 
     @GetMapping
-    public List<StudentMatterOutputDTO> getAllStudentMatter(){
-        List<StudentMatter> studentMatterList = new ArrayList<>();
-        studentMatterList = studentMatterServiceUseCase.getAllStudentMatter();
-        return studentMatterList.stream()
-                .map( l -> new StudentMatterOutputDTO(l))
-                .collect(Collectors.toList());
+    public List<Object> getAllStudentMatter(@RequestParam(required = false, defaultValue = "simple") String outputType){
+        List<Object> studentMatterList = new ArrayList<>();
+        studentMatterList = studentMatterServiceUseCase.getAllStudentMatter(outputType);
+        return studentMatterList;
     }
 
 
@@ -50,9 +48,9 @@ public class StudentMatterController {
     }
 
     @GetMapping("{id_studentMatter}")
-    public StudentMatterOutputDTO getStudentMatterById(@PathVariable String id_studentMatter) {
+    public Object getStudentMatterById(@PathVariable String id_studentMatter, @RequestParam(required = false, defaultValue = "simple") String outputType) {
 
-        return studentMatterServiceUseCase.getStudentMatterByID(id_studentMatter);
+        return studentMatterServiceUseCase.getStudentMatterByID(id_studentMatter,outputType);
     }
 
     @Transactional(rollbackOn = Exception.class)

@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface StudentMatterServicePort {
 
-    List<StudentMatter> getAllStudentMatter();
-    StudentMatterOutputDTO getStudentMatterByID(String id);
+    List<Object> getAllStudentMatter(String outputType);
+    Object getStudentMatterByID(String id, String outputType);
     StudentMatterOutputDTO createStudentMatter(StudentMatterInputDTO sm);
     void deleteStudentMatter(String id);
     StudentMatterOutputDTO updateStudentMatter(String id, StudentMatterInputDTO studentMatterInputDTO);

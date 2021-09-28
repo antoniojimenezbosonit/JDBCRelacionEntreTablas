@@ -6,9 +6,9 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.exceptions.UnprocesableExce
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.repository.StudentRepository;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.application.port.StudentMatterServicePort;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.domain.StudentMatter;
-import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.ListIdStudent;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.dto.input.StudentMatterInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.dto.output.StudentMatterOutputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.controller.dto.output.StudentMatterSimpleOutputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.student_matter.infrastructure.repository.StudentMatterRepository;
 
 import lombok.AllArgsConstructor;
@@ -31,14 +31,30 @@ public class StudentMatterServiceUseCase implements StudentMatterServicePort {
     @Autowired
     StudentMatterRepository studentMatterRepository;
 
-    public List<StudentMatter> getAllStudentMatter(){
+    public List<Object> getAllStudentMatter(String outputType){
         List<StudentMatter> sm = new ArrayList<>();
         sm = studentMatterRepository.findAll();
-        return sm;
+        List<Object> list = new ArrayList<>();
+        if(outputType.equals("full")){
+
+            sm.stream().forEach((studentMatter) ->{
+                StudentMatterOutputDTO smo = new StudentMatterOutputDTO(studentMatter);
+                list.add(smo);
+            });
+            return list;
+        }else if(outputType.equals("simple")){
+
+            sm.stream().forEach((studentMatter) -> {
+                StudentMatterSimpleOutputDTO smo = new StudentMatterSimpleOutputDTO(studentMatter);
+                list.add(smo);
+            });
+            return list;
+        }
+        return list;
     }
 
 
-    public StudentMatterOutputDTO getStudentMatterByID(String id){
+    public Object getStudentMatterByID(String id, String outputType){
 
         Optional<StudentMatter> sm;
         try {
@@ -47,9 +63,17 @@ public class StudentMatterServiceUseCase implements StudentMatterServicePort {
             throw new NotFoundException("error");
         }
 
-        StudentMatterOutputDTO studentMatterDTO = new StudentMatterOutputDTO(sm.get());
+        if(outputType.equals("full")){
 
-        return studentMatterDTO;
+            StudentMatterOutputDTO studentMatterOutputDTO = new StudentMatterOutputDTO(sm.get());;
+            return studentMatterOutputDTO;
+        }else if(outputType.equals("simple")){
+
+            StudentMatterSimpleOutputDTO studentMatterSimpleOutputDTO = new StudentMatterSimpleOutputDTO(sm.get());
+            return studentMatterSimpleOutputDTO;
+        }
+        return "invalid param";
+
 
     }
 
