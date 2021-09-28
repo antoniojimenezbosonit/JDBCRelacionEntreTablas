@@ -22,12 +22,10 @@ public class StudentController {
     StudentServicePort studentServiceUseCase;
 
     @GetMapping
-    public List<StudentOutputDTO> getAllStudent(){
-        List<Student> studentList = new ArrayList<>();
-        studentList = studentServiceUseCase.getAllStudent();
-        return studentList.stream()
-                .map( l -> new StudentOutputDTO(l))
-                .collect(Collectors.toList());
+    public List<Object> getAllStudent(@RequestParam(required = false, defaultValue = "simple") String outputType){
+        List<Object> studentList = new ArrayList<>();
+        studentList = studentServiceUseCase.getAllStudent(outputType);
+        return studentList;
     }
 
 

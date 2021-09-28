@@ -7,7 +7,10 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.person.application.port.Per
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.input.PersonInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.output.PersonOutputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.output.PersonOutputSimpleDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.repository.PersonRepository;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.student.infrastructure.controller.dto.output.StudentOutputSimpleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,14 +28,29 @@ public class PersonServiceUseCase implements PersonServicePort {
     @Autowired
     PersonRepository personRepository;
 
-    public List<Person> getAllPerson(){
+    public List<Object> getAllPerson(String outputType){
         List<Person> p = new ArrayList<>();
         p = personRepository.findAll();
-        return p;
+        List<Object> list = new ArrayList<>();
+        if(outputType.equals("full")) {
+
+            p.stream().forEach((person) -> {
+                PersonOutputDTO pt = new PersonOutputDTO(person);
+                list.add(pt);
+            });
+            return list;
+        }else if(outputType.equals("simple")){
+            p.stream().forEach((person) -> {
+                PersonOutputSimpleDTO pt = new PersonOutputSimpleDTO(person);
+                list.add(pt);
+            });
+            return list;
+        }
+        return list;
     }
 
 
-    public PersonOutputDTO getPersonByID(Integer id){
+    public Object getPersonByID(Integer id, String outputType){
 
         Optional<Person> p;
         try {
@@ -41,13 +59,22 @@ public class PersonServiceUseCase implements PersonServicePort {
             throw new NotFoundException("error");
         }
 
-        PersonOutputDTO personDTO = new PersonOutputDTO(p.get());
+        if(outputType.equals("full")) {
 
-        return personDTO;
+            PersonOutputDTO personDTO = new PersonOutputDTO(p.get());
+            return personDTO;
+        }else if(outputType.equals("simple")){
+
+            PersonOutputSimpleDTO personSimpleDTO = new PersonOutputSimpleDTO(p.get());
+            return personSimpleDTO;
+
+        }else{
+            return "parametro invalido";
+        }
 
     }
 
-    public List<PersonOutputDTO> getPersonByUser(String user){
+    public List<Object> getPersonByUser(String user, String outputType){
 
         List<Optional<Person>> p = new ArrayList<>();
         try {
@@ -55,8 +82,16 @@ public class PersonServiceUseCase implements PersonServicePort {
         }catch (NoSuchElementException e){
             throw new NotFoundException("error");
         }
-        return p.stream().map( l -> new PersonOutputDTO(l.get())).collect(Collectors.toList());
 
+        if(outputType.equals("full")) {
+
+            return p.stream().map( l -> new PersonOutputDTO(l.get())).collect(Collectors.toList());
+        }else if(outputType.equals("simple")){
+
+            return p.stream().map( l -> new PersonOutputSimpleDTO(l.get())).collect(Collectors.toList());
+
+    }
+        return p.stream().map( l -> new PersonOutputDTO(l.get())).collect(Collectors.toList());
     }
 
     public PersonOutputDTO createPerson(PersonInputDTO p){

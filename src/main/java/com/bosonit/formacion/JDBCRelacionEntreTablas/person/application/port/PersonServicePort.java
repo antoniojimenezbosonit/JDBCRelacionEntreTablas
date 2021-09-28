@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface PersonServicePort {
 
-    List<Person> getAllPerson();
-    PersonOutputDTO getPersonByID(Integer id);
-    List<PersonOutputDTO> getPersonByUser(String user);
+    List<Object> getAllPerson(String outputType);
+    Object getPersonByID(Integer id, String outputType);
+    List<Object> getPersonByUser(String user, String outputType);
     PersonOutputDTO createPerson(PersonInputDTO p);
     void deletePerson(Integer id);
     PersonOutputDTO updatePerson(Integer id, PersonInputDTO person);

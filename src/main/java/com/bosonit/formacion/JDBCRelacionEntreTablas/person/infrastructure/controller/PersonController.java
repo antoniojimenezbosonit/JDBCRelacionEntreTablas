@@ -21,12 +21,10 @@ public class PersonController {
     PersonServicePort personServiceUseCase;
 
     @GetMapping
-    public List<PersonOutputDTO> getAllPerson(){
-        List<Person> personList= new ArrayList<>();
-        personList = personServiceUseCase.getAllPerson();
-        return personList.stream()
-                .map( l -> new PersonOutputDTO(l))
-                .collect(Collectors.toList());
+    public List<Object> getAllPerson(@RequestParam(required = false, defaultValue = "simple") String outputType){
+        List<Object> personList= new ArrayList<>();
+        personList = personServiceUseCase.getAllPerson(outputType);
+        return personList;
     }
 
 
@@ -38,14 +36,14 @@ public class PersonController {
     }
 
     @GetMapping("{id_person}")
-    public PersonOutputDTO getPersonById(@PathVariable Integer id_person) {
+    public Object getPersonById(@PathVariable Integer id_person, @RequestParam(required = false, defaultValue = "simple") String outputType) {
 
-        return personServiceUseCase.getPersonByID(id_person);
+        return personServiceUseCase.getPersonByID(id_person, outputType);
     }
 
     @GetMapping("/getByUser/{user}")
-    public List<PersonOutputDTO> getPersonByUser(@PathVariable String user){
-            return personServiceUseCase.getPersonByUser(user);
+    public List<Object> getPersonByUser(@PathVariable String user, @RequestParam(required = false, defaultValue = "simple") String outputType){
+            return personServiceUseCase.getPersonByUser(user, outputType);
     }
 
 

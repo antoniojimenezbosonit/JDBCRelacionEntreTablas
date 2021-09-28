@@ -38,10 +38,25 @@ public class StudentServiceUseCase implements StudentServicePort {
     @Autowired
     TeacherRepository teacherRepository;
 
-    public List<Student> getAllStudent(){
-        List<Student> p = new ArrayList<>();
-        p = studentRepository.findAll();
-        return p;
+    public List<Object> getAllStudent(String outputType){
+        List<Student> s = new ArrayList<>();
+        s = studentRepository.findAll();
+        List<Object> list = new ArrayList<>();
+        if(outputType.equals("full")) {
+
+            s.stream().forEach((student) -> {
+                StudentOutputDTO st = new StudentOutputDTO(student);
+                list.add(st);
+            });
+            return list;
+        }else if(outputType.equals("simple")){
+            s.stream().forEach((student) -> {
+                StudentOutputSimpleDTO st = new StudentOutputSimpleDTO(student);
+                list.add(st);
+            });
+            return list;
+        }
+            return list;
     }
 
 
@@ -58,12 +73,12 @@ public class StudentServiceUseCase implements StudentServicePort {
 
         if(outputType.equals("full")) {
 
-            StudentOutputDTO personDTO = new StudentOutputDTO(p.get());
-            return personDTO;
+            StudentOutputDTO studentDTO = new StudentOutputDTO(p.get());
+            return studentDTO;
         }else if(outputType.equals("simple")){
 
-            StudentOutputSimpleDTO personSimpleDTO = new StudentOutputSimpleDTO(p.get());
-            return personSimpleDTO;
+            StudentOutputSimpleDTO studentSimpleDTO = new StudentOutputSimpleDTO(p.get());
+            return studentSimpleDTO;
 
         }else{
             return "parametro invalido";

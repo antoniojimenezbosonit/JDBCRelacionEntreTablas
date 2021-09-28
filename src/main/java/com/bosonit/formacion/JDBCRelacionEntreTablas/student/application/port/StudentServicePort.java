@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StudentServicePort {
 
-    List<Student> getAllStudent();
+    List<Object> getAllStudent(String outputType);
     Object getStudentByID(String id, String outputType);
     StudentOutputDTO createStudent(StudentInputDTO s);
     void deleteStudent(String id);
