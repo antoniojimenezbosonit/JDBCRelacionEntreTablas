@@ -6,7 +6,9 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.person.domain.Person;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.input.PersonInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.person.infrastructure.controller.dto.output.PersonOutputDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -25,6 +27,15 @@ public class PersonController {
         List<Object> personList= new ArrayList<>();
         personList = personServiceUseCase.getAllPerson(outputType);
         return personList;
+    }
+
+    @GetMapping("person-teacher/{id_teacher}")
+    public Object getTeacherByIdWithResponseEntity(@PathVariable String id_teacher){
+
+        System.out.println("Estoy dentro del get de response entity");
+        ResponseEntity<Object> rs = new RestTemplate().getForEntity("http://localhost:8081/teacher/"+ id_teacher, Object.class);
+        System.out.println("acabo de volver de la llamada al endpoint en el 8081");
+        return ResponseEntity.ok(rs.getBody());
     }
 
 
