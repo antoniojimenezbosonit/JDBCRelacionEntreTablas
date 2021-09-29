@@ -5,7 +5,10 @@ import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.application.port.Te
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.domain.Teacher;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.input.TeacherInputDTO;
 import com.bosonit.formacion.JDBCRelacionEntreTablas.teacher.infrastructure.controller.dto.output.TeacherOutputDTO;
+import com.bosonit.formacion.JDBCRelacionEntreTablas.utils.FeingServerInterface;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -19,6 +22,9 @@ import java.util.stream.Collectors;
 public class TeacherController {
 
     TeacherServicePort teacherServiceUseCase;
+
+    @Autowired
+    FeingServerInterface feingServerInterface;
 
     @GetMapping
     public List<Object> getAllTeacher(@RequestParam(required = false, defaultValue = "simple") String outputType){
@@ -39,6 +45,13 @@ public class TeacherController {
     public Object getTeacherById(@PathVariable String id_teacher, @RequestParam(required = false, defaultValue = "simple") String outputType) {
 
         return teacherServiceUseCase.getTeacherByID(id_teacher, outputType);
+    }
+
+    @GetMapping("/feign/{id_teacher}")
+    public Object getTeacherByIdWithFeign(@PathVariable String id_teacher, @RequestParam(required = false, defaultValue = "simple") String outputType) {
+
+        ResponseEntity<Object> respuesta = feingServerInterface.getTeacherByIdWithFeign(id_teacher);
+        return respuesta;
     }
 
     @Transactional(rollbackOn = Exception.class)
